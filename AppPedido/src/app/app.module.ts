@@ -32,6 +32,12 @@ import { PagamentosComponent } from './components/pagamentos/pagamentos.componen
 import { TaxasService } from './taxas.service';
 import { TaxasComponent } from './components/taxas/taxas.component';
 
+import { ListasService } from './listas.service';
+import { ListasComponent } from './components/listas/listas.component';
+
+import { ProdutosService } from './produtos.service';
+import { ProdutosComponent } from './components/produtos/produtos.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +48,8 @@ import { TaxasComponent } from './components/taxas/taxas.component';
     MesasComponent,
     PagamentosComponent,
     TaxasComponent,
+    ListasComponent,
+    ProdutosComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +59,7 @@ import { TaxasComponent } from './components/taxas/taxas.component';
     ReactiveFormsModule,
     ModalModule.forRoot()
   ],
-  providers: [HttpClientModule, ClientesService, CondimentosService, DescontosService, GarconsService, MesasService, PagamentosService, TaxasService],
+  providers: [HttpClientModule, ClientesService, CondimentosService, DescontosService, GarconsService, MesasService, PagamentosService, TaxasService, ListasService, ProdutosService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,7 +2,7 @@ export class Mesa {
   id: number;
   numero: number;
   capacidade: number;
-  disponibilidade?: string | null;
+  disponibilidade?: string;
 
   constructor(id: number, numero: number, capacidade: number, disponibilidade?: string) {
     this.id = id;

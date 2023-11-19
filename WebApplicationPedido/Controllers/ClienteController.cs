@@ -19,55 +19,70 @@ public class ClienteController : ControllerBase
     [Route("listar")]
     public async Task<ActionResult<IEnumerable<Cliente>>> Listar()
     {
+        if (_context is null) return NotFound();
         if (_context.Cliente is null) return NotFound();
         return await _context.Cliente.ToListAsync();
     }
 
     [HttpGet]
-    [Route("buscar/{nome}")]
+    [Route("buscar/{id}")]
 
-    public async Task<ActionResult<Cliente>> Buscar(string nome)
+    public async Task<ActionResult<Cliente>> Buscar(int id)
     {
-        if (_context.Cliente is null) return NotFound();
-        var Cliente = await _context.Cliente.FindAsync(nome);
-        return Cliente;
+        if (_context is null) return NotFound();
+        if (_context.Cliente is null) return NotFound(); 
+        var clientevar = await _context.Cliente.FindAsync(id);
+        if (clientevar is null) return NotFound();
+        return clientevar;
     }
+
     [HttpPost]
     [Route("cadastrar")]
-    public async Task<IActionResult> Cadastrar(Cliente Cliente)
+    public async Task<IActionResult> Cadastrar(Cliente cliente)
     {
-        await _context.AddAsync(Cliente);
+        if(_context is null) return NotFound();
+        if (_context.Cliente is null) return NotFound();
+        await _context.AddAsync(cliente);
         await _context.SaveChangesAsync();
-        return Created("", Cliente);
+        return Created("", cliente);
     }
 
-    [HttpPut]
+    [HttpPut()]
     [Route("alterar")]
-    public async Task<IActionResult> Alterar(Cliente Cliente)
+    public async Task<IActionResult> Alterar(Cliente cliente)
     {
-        _context.Cliente.Update(Cliente);
+        if (_context is null) return NotFound();
+        if (_context.Cliente is null) return NotFound();
+        var clientevar = await _context.Cliente.FindAsync(cliente.Id);
+        if (clientevar is null) return NotFound();
+        _context.Remove(clientevar);
+        await _context.AddAsync(cliente);
         await _context.SaveChangesAsync();
         return Ok();
     }
 
-    [HttpDelete]
-    [Route("excluir/{cliente}")]
-    public async Task<IActionResult> Excluir(string nome)
+    [HttpDelete()]
+    [Route("excluir/{id}")]
+    public async Task<IActionResult> Excluir(int id)
     {
-        var Cliente = await _context.Cliente.FindAsync(nome);
-        if (Cliente is null) return NotFound();
-        _context.Cliente.Remove(Cliente);
+        if (_context is null) return NotFound();
+        if (_context.Cliente is null) return NotFound();
+        var clientevar = await _context.Cliente.FindAsync(id);
+        if (clientevar is null) return NotFound();
+        _context.Remove(clientevar);
         await _context.SaveChangesAsync();
         return Ok();
     }
 
-    [HttpPatch]
-    [Route("modificardescricao/{nome}")]
-    public async Task<IActionResult> ModificarNome(string nome, [FromForm] string email)
+    [HttpPatch()]
+    [Route("modificarobservação/{id}")]
+    public async Task<IActionResult> ModificarNome(int id, [FromForm] string observacoes)
     {
-        var Cliente = await _context.Cliente.FindAsync(nome);
-        if (Cliente is null) return NotFound();
-        Cliente.Nome = email;
+        if (_context is null) return NotFound();
+        if (_context.Cliente is null) return NotFound();
+        var clientevar = await _context.Cliente.FindAsync(id);
+        if (clientevar is null) return NotFound();
+        clientevar.Observacoes = observacoes;
         await _context.SaveChangesAsync();
         return Ok();
     }

@@ -19,44 +19,56 @@ public class TaxaController : ControllerBase
     [Route("listar")]
     public async Task<ActionResult<IEnumerable<Taxa>>> Listar()
     {
+        if (_context is null) return NotFound();
         if (_context.Taxa is null) return NotFound();
         return await _context.Taxa.ToListAsync();
     }
 
     [HttpGet]
-    [Route("buscar/{tipo}")]
+    [Route("buscar/{id}")]
 
-    public async Task<ActionResult<Taxa>> Buscar(string tipo)
+    public async Task<ActionResult<Taxa>> Buscar(int id)
     {
+        if (_context is null) return NotFound();
         if (_context.Taxa is null) return NotFound();
-        var Taxa = await _context.Taxa.FindAsync(tipo);
-        return Taxa;
+        var taxavar = await _context.Taxa.FindAsync(id);
+        if (taxavar is null) return NotFound();
+        return taxavar;
     }
     [HttpPost]
     [Route("cadastrar")]
-    public async Task<IActionResult> Cadastrar(Taxa Taxa)
+    public async Task<IActionResult> Cadastrar(Taxa taxa)
     {
-        await _context.AddAsync(Taxa);
+        if (_context is null) return NotFound();
+        if (_context.Taxa is null) return NotFound();
+        await _context.AddAsync(taxa);
         await _context.SaveChangesAsync();
-        return Created("", Taxa);
+        return Created("", taxa);
     }
 
-    [HttpPut]
+    [HttpPut()]
     [Route("alterar")]
-    public async Task<IActionResult> Alterar(Taxa Taxa)
+    public async Task<IActionResult> Alterar(Taxa taxa)
     {
-        _context.Taxa.Update(Taxa);
+        if (_context is null) return NotFound();
+        if (_context.Taxa is null) return NotFound();
+        var taxavar = await _context.Taxa.FindAsync(taxa.Id);
+        if (taxavar is null) return NotFound();
+        _context.Remove(taxavar);
+        await _context.AddAsync(taxa);
         await _context.SaveChangesAsync();
         return Ok();
     }
 
-    [HttpDelete]
-    [Route("excluir/{taxa}")]
-    public async Task<IActionResult> Excluir(string tipo)
+    [HttpDelete()]
+    [Route("excluir/{id}")]
+    public async Task<IActionResult> Excluir(int id)
     {
-        var Taxa = await _context.Taxa.FindAsync(tipo);
-        if (Taxa is null) return NotFound();
-        _context.Taxa.Remove(Taxa);
+        if (_context is null) return NotFound();
+        if (_context.Taxa is null) return NotFound();
+        var taxavar = await _context.Taxa.FindAsync(id);
+        if (taxavar is null) return NotFound();
+        _context.Remove(taxavar);
         await _context.SaveChangesAsync();
         return Ok();
     }

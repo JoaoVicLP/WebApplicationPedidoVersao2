@@ -19,44 +19,56 @@ public class DescontoController : ControllerBase
     [Route("listar")]
     public async Task<ActionResult<IEnumerable<Desconto>>> Listar()
     {
+        if (_context is null) return NotFound();
         if (_context.Desconto is null) return NotFound();
         return await _context.Desconto.ToListAsync();
     }
 
     [HttpGet]
-    [Route("buscar/{nome}")]
+    [Route("buscar/{id}")]
 
-    public async Task<ActionResult<Desconto>> Buscar(string nome)
+    public async Task<ActionResult<Desconto>> Buscar(int id)
     {
+        if (_context is null) return NotFound();
         if (_context.Desconto is null) return NotFound();
-        var Desconto = await _context.Desconto.FindAsync(nome);
-        return Desconto;
+        var descontovar = await _context.Desconto.FindAsync(id);
+        if (descontovar is null) return NotFound();
+        return descontovar;
     }
     [HttpPost]
     [Route("cadastrar")]
-    public async Task<IActionResult> Cadastrar(Desconto Desconto)
+    public async Task<IActionResult> Cadastrar(Desconto desconto)
     {
-        await _context.AddAsync(Desconto);
+        if (_context is null) return NotFound();
+        if (_context.Desconto is null) return NotFound();
+        await _context.AddAsync(desconto);
         await _context.SaveChangesAsync();
-        return Created("", Desconto);
+        return Created("", desconto);
     }
 
-    [HttpPut]
+    [HttpPut()]
     [Route("alterar")]
-    public async Task<IActionResult> Alterar(Desconto Desconto)
+    public async Task<IActionResult> Alterar(Desconto desconto)
     {
-        _context.Desconto.Update(Desconto);
+        if (_context is null) return NotFound();
+        if (_context.Desconto is null) return NotFound();
+        var descontovar = await _context.Desconto.FindAsync(desconto.Id);
+        if (descontovar is null) return NotFound();
+        _context.Remove(descontovar);
+        await _context.AddAsync(desconto);
         await _context.SaveChangesAsync();
         return Ok();
     }
 
-    [HttpDelete]
-    [Route("excluir/{desconto}")]
-    public async Task<IActionResult> Excluir(string nome)
+    [HttpDelete()]
+    [Route("excluir/{id}")]
+    public async Task<IActionResult> Excluir(int id)
     {
-        var Desconto = await _context.Desconto.FindAsync(nome);
-        if (Desconto is null) return NotFound();
-        _context.Desconto.Remove(Desconto);
+        if (_context is null) return NotFound();
+        if (_context.Desconto is null) return NotFound();
+        var descontovar = await _context.Desconto.FindAsync(id);
+        if (descontovar is null) return NotFound();
+        _context.Desconto.Remove(descontovar);
         await _context.SaveChangesAsync();
         return Ok();
     }

@@ -22,10 +22,11 @@ export class MesasComponent implements OnInit {
       disponibilidade: new FormControl(null)
     })
   }
+
   enviarFormulario(): void {
     const mesa: Mesa = this.formulario.value;
     this.mesasService.cadastrar(mesa).subscribe(result => {
       alert('Mesa inserida com sucesso.');
-    })
+    });
   }
 }

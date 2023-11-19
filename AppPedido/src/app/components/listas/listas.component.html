@@ -1,0 +1,57 @@
+<div class="container p-5">
+  <div class="row">
+    <div class="col-6 border border-light rounded p-5 shadow" *ngIf="formulario">
+      <h6>{{ tituloFormulario }}</h6>
+      <form [formGroup]="formulario" (ngSubmit)="enviarFormulario()">
+        <div class="form-group">
+          <label>Status</label>
+          <input type="text" class="form-control form-control-sm" formControlName="status" />
+        </div>
+        <div class="form-group">
+          <label>Soma Total</label>
+          <input type="number" class="form-control form-control-sm" formControlName="somaTotal" />
+        </div>
+        <div class="form-group">
+          <label>Mesa</label>
+          <input type="text" class="form-control form-control-sm" formControlName="mesa" />
+        </div>
+        <div class="form-group">
+          <label>Desconto</label>
+          <input type="text" class="form-control form-control-sm" formControlName="desconto" />
+        </div>
+        <div class="form-group">
+          <label>Taxa</label>
+          <input type="text" class="form-control form-control-sm" formControlName="taxa" />
+        </div>
+        <div class="form-group">
+          <label>Pagamento</label>
+          <input type="text" class="form-control form-control-sm" formControlName="pagamento" />
+        </div>
+        <div class="form-group">
+          <label>Garçom</label>
+          <input type="text" class="form-control form-control-sm" formControlName="garcom" />
+        </div>
+        <div class="form-group">
+          <label>Produtos</label>
+          <input type="text" class="form-control form-control-sm" formControlName="produtos" />
+        </div>
+        <div class="form-group">
+          <label>Cliente</label>
+          <input type="text" class="form-control form-control-sm" formControlName="cliente" />
+        </div>
+        <div class="container">
+          <div class="row">
+            <div>
+              <button type="submit" class="btn btn-sm btn-outline-secondary">
+                Salvar
+              </button>
+            </div>
+            <div class="pl-1">
+              <button type="button" class="btn btn-sm btn-light">Voltar</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Taxa } from './Taxa';
+import { Lista } from './Lista';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -12,33 +12,33 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class TaxasService {
-  apiUrl = 'http://localhost:5000/Taxa'; 
+export class ListasService {
+  apiUrl = 'http://localhost:5000/Lista';
 
   constructor(private http: HttpClient) { }
 
-  listar(): Observable<Taxa[]> {
+  listar(): Observable<Lista[]> {
     const url = `${this.apiUrl}/listar`;
-    return this.http.get<Taxa[]>(url);
+    return this.http.get<Lista[]>(url);
   }
 
-  buscar(id: number): Observable<Taxa> {
+  buscar(id: number): Observable<Lista> {
     const url = `${this.apiUrl}/buscar/${id}`;
-    return this.http.get<Taxa>(url);
+    return this.http.get<Lista>(url);
   }
 
-  cadastrar(taxa: Taxa): Observable<any> {
+  cadastrar(lista: Lista): Observable<any> {
     const url = `${this.apiUrl}/cadastrar`;
-    return this.http.post<Taxa>(url, taxa, httpOptions);
+    return this.http.post<Lista>(url, lista, httpOptions);
   }
 
-  atualizar(taxa: Taxa): Observable<any> {
+  atualizar(lista: Lista): Observable<any> {
     const url = `${this.apiUrl}/atualizar`;
-    return this.http.put<Taxa>(url, taxa, httpOptions);
+    return this.http.put<Lista>(url, lista, httpOptions);
   }
 
   excluir(id: number): Observable<any> {
     const url = `${this.apiUrl}/excluir/${id}`;
-    return this.http.delete<number>(url, httpOptions);
+    return this.http.delete<string>(url, httpOptions);
   }
 }

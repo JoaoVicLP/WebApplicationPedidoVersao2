@@ -20,55 +20,69 @@ public class MesaController : ControllerBase
     [Route("listar")]
     public async Task<ActionResult<IEnumerable<Mesa>>> Listar()
     {
+        if (_context is null) return NotFound();
         if (_context.Mesa is null) return NotFound();
         return await _context.Mesa.ToListAsync();
     }
 
     [HttpGet]
-    [Route("buscar/{numero}")]
+    [Route("buscar/{id}")]
 
-    public async Task<ActionResult<Mesa>> Buscar(int numero)
+    public async Task<ActionResult<Mesa>> Buscar(int id)
     {
+        if (_context is null) return NotFound();
         if (_context.Mesa is null) return NotFound();
-        var Mesa = await _context.Mesa.FindAsync(numero);
-        return Mesa;
+        var mesavar = await _context.Mesa.FindAsync(id);
+        if (mesavar is null) return NotFound();
+        return mesavar;
     }
     [HttpPost]
     [Route("cadastrar")]
-    public async Task<IActionResult> Cadastrar(Mesa Mesa)
+    public async Task<IActionResult> Cadastrar(Mesa mesa)
     {
-        await _context.AddAsync(Mesa);
+        if (_context is null) return NotFound();
+        if (_context.Mesa is null) return NotFound();
+        await _context.AddAsync(mesa);
         await _context.SaveChangesAsync();
-        return Created("", Mesa);
+        return Created("", mesa);
     }
 
     [HttpPut]
     [Route("alterar")]
-    public async Task<IActionResult> Alterar(Mesa Mesa)
+    public async Task<IActionResult> Alterar(Mesa mesa)
     {
-        _context.Mesa.Update(Mesa);
+        if (_context is null) return NotFound();
+        if (_context.Mesa is null) return NotFound();
+        var mesavar = await _context.Mesa.FindAsync(mesa.Id);
+        if (mesavar is null) return NotFound();
+        _context.Remove(mesavar);
+        await _context.AddAsync(mesa);
         await _context.SaveChangesAsync();
         return Ok();
     }
 
     [HttpDelete]
-    [Route("excluir/{mesa}")]
-    public async Task<IActionResult> Excluir(int numero)
+    [Route("excluir/{id}")]
+    public async Task<IActionResult> Excluir(int id)
     {
-        var Mesa = await _context.Mesa.FindAsync(numero);
-        if (Mesa is null) return NotFound();
-        _context.Mesa.Remove(Mesa);
+        if (_context is null) return NotFound();
+        if (_context.Mesa is null) return NotFound();
+        var mesavar = await _context.Mesa.FindAsync(id);
+        if (mesavar is null) return NotFound();
+        _context.Remove(mesavar);
         await _context.SaveChangesAsync();
         return Ok();
     }
 
     [HttpPatch]
-    [Route("modificardescricao/{numero}")]
-    public async Task<IActionResult> ModificarNome(int numero, [FromForm] int capacidade)
+    [Route("modificardisponibilidade/{id}")]
+    public async Task<IActionResult> ModificarNome(int id, [FromForm] string disp)
     {
-        var Mesa = await _context.Mesa.FindAsync(numero);
-        if (Mesa is null) return NotFound();
-        Mesa.Numero = capacidade;
+        if (_context is null) return NotFound();
+        if (_context.Mesa is null) return NotFound();
+        var mesavar = await _context.Mesa.FindAsync(id);
+        if (mesavar is null) return NotFound();
+        mesavar.Disponibilidade = disp;
         await _context.SaveChangesAsync();
         return Ok();
     }

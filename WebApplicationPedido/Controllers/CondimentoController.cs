@@ -19,55 +19,69 @@ public class CondimentoController : ControllerBase
     [Route("listar")]
     public async Task<ActionResult<IEnumerable<Condimento>>> Listar()
     {
+        if (_context is null) return NotFound();
         if (_context.Condimento is null) return NotFound();
         return await _context.Condimento.ToListAsync();
     }
 
     [HttpGet]
-    [Route("buscar/{nome}")]
+    [Route("buscar/{id}")]
 
-    public async Task<ActionResult<Condimento>> Buscar(string nome)
+    public async Task<ActionResult<Condimento>> Buscar(int id)
     {
-        if (_context.Cliente is null) return NotFound();
-        var Condimento = await _context.Condimento.FindAsync(nome);
-        return Condimento;
+        if (_context is null) return NotFound();
+        if (_context.Condimento is null) return NotFound();
+        var condimentovar = await _context.Condimento.FindAsync(id);
+        if (condimentovar is null) return NotFound();
+        return condimentovar;
     }
     [HttpPost]
-    [Route("cadastrar")]
-    public async Task<IActionResult> Cadastrar(Condimento Condimento)
+    [Route("cadastrar")] 
+    public async Task<IActionResult> Cadastrar(Condimento condimento)
     {
-        await _context.AddAsync(Condimento);
+        if (_context is null) return NotFound();
+        if (_context.Condimento is null) return NotFound();
+        await _context.AddAsync(condimento);
         await _context.SaveChangesAsync();
-        return Created("", Condimento);
+        return Created("", condimento);
     }
 
-    [HttpPut]
+    [HttpPut()]
     [Route("alterar")]
-    public async Task<IActionResult> Alterar(Condimento Condimento)
+    public async Task<IActionResult> Alterar(Condimento condimento)
     {
-        _context.Condimento.Update(Condimento);
+        if (_context is null) return NotFound();
+        if (_context.Condimento is null) return NotFound();
+        var condimentovar = await _context.Condimento.FindAsync(condimento.Id);
+        if (condimentovar is null) return NotFound();
+        _context.Remove(condimentovar);
+        await _context.AddAsync(condimento);
         await _context.SaveChangesAsync();
         return Ok();
     }
 
-    [HttpDelete]
-    [Route("excluir/{cliente}")]
-    public async Task<IActionResult> Excluir(string nome)
+    [HttpDelete()]
+    [Route("excluir/{id}")]
+    public async Task<IActionResult> Excluir(int id)
     {
-        var Condimento = await _context.Condimento.FindAsync(nome);
-        if (Condimento is null) return NotFound();
-        _context.Condimento.Remove(Condimento);
+        if (_context is null) return NotFound();
+        if (_context.Condimento is null) return NotFound();
+        var condimentovar = await _context.Condimento.FindAsync(id);
+        if (condimentovar is null) return NotFound();
+        _context.Remove(condimentovar);
         await _context.SaveChangesAsync();
         return Ok();
     }
 
-    [HttpPatch]
-    [Route("modificardescricao/{nome}")]
-    public async Task<IActionResult> ModificarNome(string nome, [FromForm] string quantidade)
+    [HttpPatch()]
+    [Route("modificarQuantidade/{id}")]
+    public async Task<IActionResult> ModificarNome(int id, [FromForm] float quantidade)
     {
-        var Condimento = await _context.Condimento.FindAsync(nome);
-        if (Condimento is null) return NotFound();
-        Condimento.Nome = quantidade;
+        if (_context is null) return NotFound();
+        if (_context.Condimento is null) return NotFound();
+        var condimentovar = await _context.Condimento.FindAsync(id);
+        if (condimentovar is null) return NotFound();
+        condimentovar.Quantidade = quantidade;
         await _context.SaveChangesAsync();
         return Ok();
     }

@@ -19,44 +19,57 @@ public class GarcomController : ControllerBase
     [Route("listar")]
     public async Task<ActionResult<IEnumerable<Garcom>>> Listar()
     {
+        if (_context is null) return NotFound();
         if (_context.Garcom is null) return NotFound();
         return await _context.Garcom.ToListAsync();
     }
 
     [HttpGet]
-    [Route("buscar/{nome}")]
+    [Route("buscar/{id}")]
 
-    public async Task<ActionResult<Garcom>> Buscar(string nome)
+    public async Task<ActionResult<Garcom>> Buscar(int id)
     {
+        if (_context is null) return NotFound();
         if (_context.Garcom is null) return NotFound();
-        var Garcom = await _context.Garcom.FindAsync(nome);
-        return Garcom;
+        var garcomvar = await _context.Garcom.FindAsync(id);
+        if (garcomvar is null) return NotFound();
+        return garcomvar;
     }
+
     [HttpPost]
     [Route("cadastrar")]
-    public async Task<IActionResult> Cadastrar(Garcom Garcom)
+    public async Task<IActionResult> Cadastrar(Garcom garcom)
     {
-        await _context.AddAsync(Garcom);
+        if (_context is null) return NotFound();
+        if (_context.Garcom is null) return NotFound();
+        await _context.AddAsync(garcom);
         await _context.SaveChangesAsync();
-        return Created("", Garcom);
+        return Created("", garcom);
     }
 
-    [HttpPut]
+    [HttpPut()]
     [Route("alterar")]
-    public async Task<IActionResult> Alterar(Garcom Garcom)
+    public async Task<IActionResult> Alterar(Garcom garcom)
     {
-        _context.Garcom.Update(Garcom);
+        if (_context is null) return NotFound();
+        if (_context.Garcom is null) return NotFound();
+        var garcomvar = await _context.Garcom.FindAsync(garcom.Id);
+        if (garcomvar is null) return NotFound();
+        _context.Remove(garcomvar);
+        await _context.AddAsync(garcom);
         await _context.SaveChangesAsync();
         return Ok();
     }
 
-    [HttpDelete]
-    [Route("excluir/{garcom}")]
-    public async Task<IActionResult> Excluir(string nome)
+    [HttpDelete()]
+    [Route("excluir/{id}")]
+    public async Task<IActionResult> Excluir(int id)
     {
-        var Garcom = await _context.Garcom.FindAsync(nome);
-        if (Garcom is null) return NotFound();
-        _context.Garcom.Remove(Garcom);
+        if (_context is null) return NotFound();
+        if (_context.Garcom is null) return NotFound();
+        var garcomvar = await _context.Garcom.FindAsync(id);
+        if (garcomvar is null) return NotFound();
+        _context.Garcom.Remove(garcomvar);
         await _context.SaveChangesAsync();
         return Ok();
     }
