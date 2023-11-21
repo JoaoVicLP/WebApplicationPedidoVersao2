@@ -32,7 +32,7 @@ export class ListasService {
     return this.http.post<Lista>(url, lista, httpOptions);
   }
 
-  atualizar(lista: Lista): Observable<any> {
+  alterar(lista: Lista): Observable<any> {
     const url = `${this.apiUrl}/atualizar`;
     return this.http.put<Lista>(url, lista, httpOptions);
   }

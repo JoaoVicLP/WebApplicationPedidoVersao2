@@ -32,7 +32,7 @@ export class TaxasService {
     return this.http.post<Taxa>(url, taxa, httpOptions);
   }
 
-  atualizar(taxa: Taxa): Observable<any> {
+  alterar(taxa: Taxa): Observable<any> {
     const url = `${this.apiUrl}/atualizar`;
     return this.http.put<Taxa>(url, taxa, httpOptions);
   }

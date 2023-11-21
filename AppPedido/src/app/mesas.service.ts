@@ -26,7 +26,7 @@ export class MesasService {
     const url = `${this.apiUrl}/cadastrar`;
     return this.http.post<Mesa>(url, mesa, httpOptions);
   }
-  atualizar(mesa: Mesa): Observable<any> {
+  alterar(mesa: Mesa): Observable<any> {
     const url = `${this.apiUrl}/atualizar`;
     return this.http.put<Mesa>(url, mesa, httpOptions);
   }

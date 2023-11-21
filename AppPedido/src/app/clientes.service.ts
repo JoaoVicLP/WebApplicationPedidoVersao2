@@ -26,7 +26,7 @@ export class ClientesService {
     const url = `${this.apiUrl}/cadastrar`;
     return this.http.post<Cliente>(url, cliente, httpOptions);
   }
-  atualizar(cliente: Cliente): Observable<any> {
+  alterar(cliente: Cliente): Observable<any> {
     const url = `${this.apiUrl}/atualizar`;
     return this.http.put<Cliente>(url, cliente, httpOptions);
   }

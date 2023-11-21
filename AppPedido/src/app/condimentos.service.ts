@@ -26,7 +26,7 @@ export class CondimentosService {
     const url = `${this.apiUrl}/cadastrar`;
     return this.http.post<Condimento>(url, condimento, httpOptions);
   }
-  atualizar(condimento: Condimento): Observable<any> {
+  alterar(condimento: Condimento): Observable<any> {
     const url = `${this.apiUrl}/atualizar`;
     return this.http.put<Condimento>(url, condimento, httpOptions);
   }

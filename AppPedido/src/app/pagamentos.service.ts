@@ -26,7 +26,7 @@ export class PagamentosService {
     const url = `${this.apiUrl}/cadastrar`;
     return this.http.post<Pagamento>(url, pagamento, httpOptions);
   }
-  atualizar(pagamento: Pagamento): Observable<any> {
+  alterar(pagamento: Pagamento): Observable<any> {
     const url = `${this.apiUrl}/atualizar`;
     return this.http.put<Pagamento>(url, pagamento, httpOptions);
   }

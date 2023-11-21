@@ -26,7 +26,7 @@ export class DescontosService {
     const url = `${this.apiUrl}/cadastrar`;
     return this.http.post<Desconto>(url, desconto, httpOptions);
   }
-  atualizar(desconto: Desconto): Observable<any> {
+  alterar(desconto: Desconto): Observable<any> {
     const url = `${this.apiUrl}/atualizar`;
     return this.http.put<Desconto>(url, desconto, httpOptions);
   }

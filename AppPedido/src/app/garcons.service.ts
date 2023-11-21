@@ -26,7 +26,7 @@ export class GarconsService {
     const url = `${this.apiUrl}/cadastrar`;
     return this.http.post<Garcom>(url, garcom, httpOptions);
   }
-  atualizar(garcom: Garcom): Observable<any> {
+  alterar(garcom: Garcom): Observable<any> {
     const url = `${this.apiUrl}/atualizar`;
     return this.http.put<Garcom>(url, garcom, httpOptions);
   }

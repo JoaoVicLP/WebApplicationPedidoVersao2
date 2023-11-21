@@ -1,13 +1,6 @@
 export class Mesa {
-  id: number;
-  numero: number;
-  capacidade: number;
-  disponibilidade?: string;
-
-  constructor(id: number, numero: number, capacidade: number, disponibilidade?: string) {
-    this.id = id;
-    this.numero = numero;
-    this.capacidade = capacidade;
-    this.disponibilidade = disponibilidade;
-  }
+  id: number = 0;
+  numero: number = 0;
+  capacidade: number = 0;
+  disponibilidade: string = '';
 }

@@ -1,11 +1,5 @@
 export class Taxa {
-  id: number;
-  tipo: string | null;
-  valor: number;
-
-  constructor(id: number, tipo: string | null, valor: number) {
-    this.id = id;
-    this.tipo = tipo;
-    this.valor = valor;
-  }
+  id: number = 0;
+  tipo: string = '';
+  valor: number = 0;
 }

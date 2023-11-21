@@ -13,31 +13,59 @@
         </div>
         <div class="form-group">
           <label>Mesa</label>
-          <input type="text" class="form-control form-control-sm" formControlName="mesa" />
+          <select class="form-control form-control-sm" formControlName="marcaId">
+          <option *ngFor="let mesa of mesas" [value]="mesa.id">
+            {{ mesa.numero }}
+           </option>
+          </select>
         </div>
         <div class="form-group">
           <label>Desconto</label>
-          <input type="text" class="form-control form-control-sm" formControlName="desconto" />
-        </div>
+          <select class="form-control form-control-sm" formControlName="descontoId">
+            <option *ngFor="let desconto of descontos" [value]="desconto.id">
+              {{ desconto.nome }}
+            </option>
+          </select>
+          </div>
         <div class="form-group">
           <label>Taxa</label>
-          <input type="text" class="form-control form-control-sm" formControlName="taxa" />
+          <select class="form-control form-control-sm" formControlName="taxaId">
+            <option *ngFor="let taxa of taxas" [value]="taxa.id">
+              {{ taxa.tipo }}
+            </option>
+          </select>
         </div>
         <div class="form-group">
           <label>Pagamento</label>
-          <input type="text" class="form-control form-control-sm" formControlName="pagamento" />
+          <select class="form-control form-control-sm" formControlName="pagamentoId">
+            <option *ngFor="let pagamento of pagamentos" [value]="pagamento.id">
+              {{ pagamento.formaDePagamento }}
+            </option>
+          </select>
         </div>
         <div class="form-group">
           <label>Garçom</label>
-          <input type="text" class="form-control form-control-sm" formControlName="garcom" />
+          <select class="form-control form-control-sm" formControlName="garcomId">
+            <option *ngFor="let garcom of garcons" [value]="garcom.id">
+              {{ garcom.nome }}
+            </option>
+          </select>
         </div>
         <div class="form-group">
           <label>Produtos</label>
-          <input type="text" class="form-control form-control-sm" formControlName="produtos" />
+          <select class="form-control form-control-sm" formControlName="produtoId">
+            <option *ngFor="let produto of produtos" [value]="produto.id">
+              {{ produto.nome }}
+            </option>
+          </select>
         </div>
         <div class="form-group">
           <label>Cliente</label>
-          <input type="text" class="form-control form-control-sm" formControlName="cliente" />
+          <select class="form-control form-control-sm" formControlName="clienteId">
+            <option *ngFor="let cliente of clientes" [value]="cliente.id">
+              {{ cliente.nome }}
+            </option>
+          </select>
         </div>
         <div class="container">
           <div class="row">

@@ -27,7 +27,7 @@ export class ProdutosService {
     const url = `${this.apiUrl}/cadastrar`;
     return this.http.post<Produto>(url, produto, httpOptions);
   }
-  atualizar(produto: Produto): Observable<any> {
+  alterar(produto: Produto): Observable<any> {
     const url = `${this.apiUrl}/atualizar`;
     return this.http.put<Produto>(url, produto, httpOptions);
   }
